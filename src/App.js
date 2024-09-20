@@ -1,6 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
+import WeatherBox from './component/WeatherBox';
+import WeatherButton from './component/WeatherButton';
 
 // 1. 앱이 실행되자마자 현지위치기반의 날씨가 보인다
 // 2. 날씨정보에는 도시, 섭씨, 화씨 날씨상태
@@ -21,14 +23,15 @@ function App() {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=861351e4b65eb1adfebe021f96f31ff3`;
     let response = await fetch(url);
     let data = await response.json();
-    console.log('data', data);
   };
   useEffect(() => {
     getCurrentLocation();
   }, []); //componentDIdMount, Rander하고 바로 실행
+
   return (
     <div>
-      <div>HIII</div>
+      <WeatherBox />
+      <WeatherButton />
     </div>
   );
 }
