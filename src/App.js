@@ -11,6 +11,8 @@ import WeatherButton from './component/WeatherButton';
 // 5. 현재위치버튼을 누르면 다시 현재위치 기반의 날씨가 나온다.
 // 6. 데이터를 들고오는 동안 로딩 스피너가 돈다.
 function App() {
+  const [weather, setWeather] = useState(null);
+  const cities = ['paris', 'new york', 'tokyo', 'seoul'];
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
@@ -20,9 +22,10 @@ function App() {
   };
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=861351e4b65eb1adfebe021f96f31ff3`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=861351e4b65eb1adfebe021f96f31ff3&units=metric`;
     let response = await fetch(url);
     let data = await response.json();
+    setWeather(data);
   };
   useEffect(() => {
     getCurrentLocation();
@@ -30,8 +33,10 @@ function App() {
 
   return (
     <div>
-      <WeatherBox />
-      <WeatherButton />
+      <div className="container">
+        <WeatherBox weather={weather} />
+        <WeatherButton cities={cities} />
+      </div>
     </div>
   );
 }
